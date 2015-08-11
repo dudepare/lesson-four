@@ -4,9 +4,17 @@
 
 {% block content %}
   <h2>Clients</h2>
+  <form method="POST" class="pure-form pure-form-stacked">
+    <fieldset>
+    {% csrf_token %}
+    {{ client_form.as_p }}
+    <input type="submit" class="pure-button pure-button-primary" value="{{ operation }}">
+  </fieldset>
+  </form>
+
   <ul>
     {% for client in client_list %}
-    <li><a href="{% url 'client-detail' pk=client.pk %}">{{ client.name }}</a></li>
+    <li> <a href="{% url 'client-detail' pk=client.pk %}">{{ client.name }}</a>  <a href="{% url 'client-edit' pk=client.pk%}"> [Edit]</a></li>
     {% endfor %}
   </ul>
 {% endblock %}

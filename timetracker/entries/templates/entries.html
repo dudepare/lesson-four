@@ -4,10 +4,10 @@
 
 {% block content %}
   <h2>Entries</h2>
-  <form method="post">
+  <form method="post" class="pure-form pure-form-stacked">
     {% csrf_token %}
     {{ entry_form.as_p }}
-    <input type="submit" name="name" value="Create Entry">
+    <input type="submit" class="pure-button pure-button-primary" name="name" value="Create Entry">
   </form>
 
   <ul>

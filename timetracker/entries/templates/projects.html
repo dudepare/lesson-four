@@ -4,9 +4,14 @@
 
 {% block content %}
   <h2>Projects</h2>
+  <form method="post" class="pure-form pure-form-stacked">
+    {% csrf_token %}
+    {{ project_form.as_p }}
+    <input type="submit" class="pure-button pure-button-primary" value="{{ operation }}">
+  </form>
   <ul>
     {% for project in project_list %}
-    <li>{{ project.name }} (<a href="{% url 'client-detail' pk=project.client.pk %}">{{ project.client.name }}</a>)</li>
+    <li>{{ project.name }} (<a href="{% url 'client-detail' pk=project.client.pk %}">{{ project.client.name }}</a>) <a href="{% url 'project-edit' pk=project.pk%}"> [Edit] </a></li>
     {% endfor %}
   </ul>
 {% endblock %}
