@@ -23,22 +23,17 @@ class EntryForm(forms.Form):
     project = forms.ModelChoiceField(queryset=Project.objects.all())
     description = forms.CharField()
 
-    def clean_start(self):
+    def clean(self):
+        # Just call the super class version of clean()
+        cleaned_data = super(EntryForm, self).clean()
         start = self.cleaned_data.get('start')
-        now = timezone.localtime(timezone.now())
-        diff = now - start       
-        if diff.total_seconds() < 0:
-            raise forms.ValidationError("Start time is invalid.")
-        return start
-
-
-    def clean_end(self):
         end = self.cleaned_data.get('end')
-        start = self.cleaned_data.get('start')
-        diff = end - start
-        print("start ", start)
-        print("end ", end)
-        print("diff.total_seconds() ", diff.total_seconds())
-        if diff.total_seconds() < 0:
-            raise forms.ValidationError("End time should be later than start time.")
-        return end
+        now = timezone.localtime(timezone.now())
+
+        if start:
+            if start > now:
+                raise forms.ValidationError("Start time should come before the current time.")
+        
+            if end:
+                if end < start:
+                    raise forms.ValidationError("End time should come after start time.")

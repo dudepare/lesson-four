@@ -9,7 +9,7 @@ def clients(request):
         client_form = ClientForm(request.POST)
         if client_form.is_valid():
             client = Client()
-            client.name = client_form.cleaned_data['name']
+            client.name = client_form.cleaned_data.get('name')
             client.save()
     else:
         client_form = ClientForm(request.POST)
@@ -27,7 +27,7 @@ def client_edit(request, pk):
     if request.method == 'POST':
         client_form = ClientForm(request.POST)
         if client_form.is_valid():
-            client.name = client_form.cleaned_data['name']
+            client.name = client_form.cleaned_data.get('name')
             client.save()
             return redirect( 'client-list' )
     else:
@@ -53,10 +53,10 @@ def entries(request):
         if entry_form.is_valid():
             # If the form is valid, let's create and Entry with the submitted data
             entry = Entry()
-            entry.start = entry_form.cleaned_data['start']
-            entry.end = entry_form.cleaned_data['end']
-            entry.project = entry_form.cleaned_data['project']
-            entry.description = entry_form.cleaned_data['description']
+            entry.start = entry_form.cleaned_data.get('start')
+            entry.end = entry_form.cleaned_data.get('end')
+            entry.project = entry_form.cleaned_data.get('project')
+            entry.description = entry_form.cleaned_data.get('description')
             entry.save()
     else:
         entry_form = EntryForm(request.POST)
@@ -73,8 +73,8 @@ def projects(request):
         project_form = ProjectForm(request.POST)
         if project_form.is_valid():
             project = Project()
-            project.name = project_form.cleaned_data['name']
-            project.client = project_form.cleaned_data['client']
+            project.name = project_form.cleaned_data.get('name')
+            project.client = project_form.cleaned_data.get('client')
             project.save()
     else:
         project_form = ProjectForm(request.POST)
